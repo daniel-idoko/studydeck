@@ -5,11 +5,10 @@ import ThemeToggle from "./components/ThemeToggle";
 import Card from "./components/Card";
 import Results from "./components/Results";
 import "./index.css";
-import questionsJson from "./questions.json";
+import questions from "./questions.json";
 
 
 function App() {
-  const [questions, setQuestion] = useState(questionsJson)
   const [index, setIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [grades, setGrades] = useState<number[]>([]);
