@@ -1,0 +1,20 @@
+[
+	{
+	"topic": "Explain XSS",
+	"category": "Web Security",
+	"answer": "<p><strong>Cross-site scripting (XSS)</strong> is an injection attack that allows attackers to inject client-side scripts into web pages viewed by other users. Types: reflected, stored, DOM-based. Prevention: output encoding, Content Security Policy (CSP), input validation, and proper use of HTTPOnly and SameSite cookies.</p>",
+	"grade": 0
+	},
+	{
+	"topic": "Explain CSRF",
+	"category": "Web Security",
+	"answer": "<p><strong>Cross-site request forgery (CSRF)</strong> tricks a user's browser into performing actions on another site where they're authenticated. Defenses: anti-CSRF tokens, SameSite cookies, and checking Origin/Referer headers.</p>",
+	"grade": 0
+	},
+	{
+	"topic": "ls -la",
+	"category": "Linux",
+	"answer": "<p>The <code>ls -la</code> command lists directory contents in long format and shows hidden files. Flags: <code>-l</code> long listing (permissions, owner, size, mtime), <code>-a</code> include dotfiles. Useful combos: <code>ls -lah</code> (human-readable sizes).</p>",
+	"grade": 0
+	}
+]
