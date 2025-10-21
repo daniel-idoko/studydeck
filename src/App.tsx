@@ -5,21 +5,8 @@ import ThemeToggle from "./components/ThemeToggle";
 import Card from "./components/Card";
 import Results from "./components/Results";
 import "./index.css";
+import questions from "questions.json";
 
-const questions = [
-  {
-    topic: "Explain XSS (Cross-Site Scripting)",
-    category: "Web Security",
-    answer:
-      "<p><strong>XSS</strong> allows attackers to inject malicious scripts into web pages viewed by others.</p>",
-  },
-  {
-    topic: "Explain CSRF (Cross-Site Request Forgery)",
-    category: "Web Security",
-    answer:
-      "<p><strong>CSRF</strong> tricks users into performing actions they didn’t intend.</p>",
-  },
-];
 
 function App() {
   const [index, setIndex] = useState(0);
