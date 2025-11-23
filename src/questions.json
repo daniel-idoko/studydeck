@@ -1,62 +1,77 @@
 [
   {
-    "topic": "Identify the XSS type in a real scenario",
-    "category": "Web Security",
-    "answer": "A social profile page renders usernames using innerHTML. When a user sets their username to `<script>alert('x')</script>`, every visitor gets an alert. What XSS type is this? What exactly caused it? (Answer: Stored XSS due to unsanitized user input rendered as HTML.)",
-    "grade": 0
+    "topic": "What happens internally when you run `sudo systemctl restart nginx`?",
+    "category": "Linux / System Administration",
+    "answer": "<p>Running <code>sudo systemctl restart nginx</code> tells <strong>systemd</strong> to stop and start the Nginx service. Internally:<br><br><strong>1. systemd loads the nginx.service unit</strong> and checks dependencies.<br><strong>2. Sends SIGTERM</strong> to gracefully stop running workers.<br><strong>3. Waits for processes to exit</strong> using cgroups tracking.<br><strong>4. Re-executes the nginx binary</strong> using the ExecStart directive.<br><strong>5. Updates the service state</strong> to 'active (running)'.<br><br>Systemd manages logging, PID tracking, and service failures automatically.</p>"
   },
   {
-    "topic": "SameSite cookie behavior in CSRF",
-    "category": "Web Security",
-    "answer": "A banking session cookie uses `SameSite=Lax`. Explain which CSRF attacks are blocked and which are still possible when the victim clicks a malicious link. (Answer: Cross-site POSTs from hidden forms are blocked. Top-level GET navigation can still send cookies.)",
-    "grade": 0
+    "topic": "SSH port 22 is open but connection times out. How do you troubleshoot it?",
+    "category": "Networking / Linux",
+    "answer": "<p>Debug steps:<br><strong>1. Check if SSH is running</strong> with <code>sudo systemctl status ssh</code>.<br><strong>2. Check port binding</strong> using <code>ss -tlnp | grep 22</code>.<br><strong>3. Test firewall</strong> via <code>sudo ufw status</code> or <code>iptables -L</code>.<br><strong>4. Check server logs</strong> in <code>/var/log/auth.log</code>.<br><strong>5. Scan from another machine</strong> with <code>nmap -p 22 your-ip</code>.<br><strong>6. Check fail2ban</strong> for lockouts.<br><strong>7. Check cloud provider security groups</strong> if applicable.<br>These steps isolate connectivity, daemon, or firewall issues.</p>"
   },
   {
-    "topic": "SQL Injection payload reasoning",
-    "category": "Ethical Hacking / Web Security",
-    "answer": "Given the vulnerable query: `SELECT * FROM users WHERE id = ${id}`, what input would return all users? Why? (Answer: `1 OR 1=1` because it turns the WHERE clause into a tautology.)",
-    "grade": 0
+    "topic": "Explain the difference between `/etc/hosts` and `/etc/resolv.conf`.",
+    "category": "Linux / Networking",
+    "answer": "<p><code>/etc/hosts</code> is a local mapping of hostnames to IPs. It bypasses DNS and is checked <strong>first</strong>.<br><br><code>/etc/resolv.conf</code> defines <strong>DNS servers</strong> the system should query (e.g., 8.8.8.8).<br><br>Order is controlled by <code>nsswitch.conf</code>. If DNS is down, <code>/etc/hosts</code> still works for local overrides.</p>"
   },
   {
-    "topic": "tcpdump filtering for HTTPS",
-    "category": "System / Network Admin",
-    "answer": "Write a tcpdump command that shows only TCP traffic to port 443, without hostname or port name resolution. (Answer: `sudo tcpdump -i any -nn tcp port 443`)",
-    "grade": 0
+    "topic": "A Linux system is running slow. What do you check first?",
+    "category": "System Administration",
+    "answer": "<p>Check:<br><strong>1. CPU</strong>: <code>top</code> or <code>htop</code>.<br><strong>2. RAM</strong>: <code>free -h</code>.<br><strong>3. Disk IO</strong>: <code>iotop</code>.<br><strong>4. Load average</strong>: <code>uptime</code>.<br><strong>5. Running services</strong>: <code>systemctl</code>.<br><strong>6. Dmesg</strong> for hardware or OOM issues.<br><strong>7. Network usage</strong>: <code>iftop</code> or <code>nethogs</code>.<br>These identify CPU hogs, memory leaks, or IO bottlenecks.</p>"
   },
   {
-    "topic": "tcpdump capture to file",
-    "category": "System / Network Admin",
-    "answer": "Which flag writes raw packets to a .pcap file? Provide an example command. (Answer: `-w`. Example: `sudo tcpdump -i eth0 -s 0 -w capture.pcap`)",
-    "grade": 0
+    "topic": "Explain what this command does: `sudo tcpdump -i any -nn port 53`",
+    "category": "Networking / Ethical Hacking",
+    "answer": "<p>This captures all <strong>DNS traffic</strong> on all interfaces.<br><br><strong>-i any</strong>: listen on all network interfaces.<br><strong>-nn</strong>: no hostname or port resolution (show raw IPs).<br><strong>port 53</strong>: filter DNS queries and responses.<br><br>Used to debug slow DNS, detect DNS leaks, or analyze malware behavior.</p>"
   },
   {
-    "topic": "iptables inbound blocking",
-    "category": "System / Network Admin",
-    "answer": "Write an iptables rule to drop all inbound traffic from 192.168.1.50. (Answer: `sudo iptables -A INPUT -s 192.168.1.50 -j DROP`)",
-    "grade": 0
-  },
-  {
-    "topic": "iptables ordering logic",
-    "category": "System / Network Admin",
-    "answer": "Explain the difference between these two commands and when you would use each:\n`iptables -A INPUT ...`\n`iptables -I INPUT 1 ...`\n(Answer: -A appends to end of chain; -I inserts at top position 1. -I is used when rule order matters.)",
-    "grade": 0
-  },
-  {
-    "topic": "Network troubleshooting: DNS failure",
+    "topic": "How do you debug slow website loading at the network level?",
     "category": "Networking",
-    "answer": "You can ping 8.8.8.8 but cannot ping google.com. What is the exact problem, and what file would you check first on Linux? (Answer: DNS issue. Check /etc/resolv.conf.)",
-    "grade": 0
+    "answer": "<p>Tools:<br><strong>1. ping</strong> to test latency.<br><strong>2. traceroute/mtr</strong> to check routing hops.<br><strong>3. dig</strong> to check DNS lookup times.<br><strong>4. curl -v</strong> to inspect handshake and headers.<br><strong>5. Check MTU</strong> for fragmentation issues.<br>Network analysis isolates DNS, routing, or transport delays.</p>"
   },
   {
-    "topic": "SSH: public key login failure",
-    "category": "System Admin",
-    "answer": "You added your public key to `~/.ssh/authorized_keys` on a server, but SSH still asks for a password. What file permission issue causes this? (Answer: ~/.ssh must be 700 and authorized_keys must be 600.)",
-    "grade": 0
+    "topic": "Explain how ARP poisoning works.",
+    "category": "Ethical Hacking / Networking",
+    "answer": "<p>ARP poisoning (ARP spoofing) sends fake ARP replies to a LAN, making hosts associate the attacker's MAC with another device's IP.<br><br>Results:<br><strong>1. MITM interception</strong> of traffic.<br><strong>2. Session hijacking</strong>.<br><strong>3. DNS spoofing</strong> and credential theft.<br><br>Detection: <code>arp -an</code>, <code>ip neigh</code>, Wireshark ARP anomalies.</p>"
   },
   {
-    "topic": "Systemctl service debugging",
-    "category": "System Admin",
-    "answer": "A systemd service fails on startup. What exact command shows its logs and failure reason? (Answer: `sudo journalctl -u <service-name> -xe`)",
-    "grade": 0
+    "topic": "Explain this firewall rule: `iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT`",
+    "category": "Security / Linux",
+    "answer": "<p>This rule allows <strong>responses</strong> to outbound traffic. Meaning:<br><strong>ESTABLISHED</strong>: packets belonging to an existing connection.<br><strong>RELATED</strong>: packets related to an existing connection (FTP, ICMP).<br><br>It makes iptables stateful so replies aren't blocked.</p>"
+  },
+  {
+    "topic": "What security events appear in `/var/log/auth.log`?",
+    "category": "Linux / Security",
+    "answer": "<p><strong>1. SSH logins</strong><br><strong>2. Failed passwords</strong><br><strong>3. sudo usage</strong><br><strong>4. key-based login errors</strong><br><strong>5. brute force attempts</strong><br><strong>6. privilege escalation attempts</strong><br>Critical for intrusion detection.</p>"
+  },
+  {
+    "topic": "Cron job is not running. How do you debug?",
+    "category": "System Administration",
+    "answer": "<p>Steps:<br><strong>1. Check crontab</strong>: <code>crontab -l</code>.<br><strong>2. Ensure script has executable permissions</strong>.<br><strong>3. Add full paths</strong> (cron has limited PATH).<br><strong>4. Check syslog</strong>: <code>/var/log/syslog</code>.<br><strong>5. Redirect errors</strong>: <code>*/5 * * * * /script.sh 2>&1</code>.<br>Cron failures are usually PATH or permission issues.</p>"
+  },
+  {
+    "topic": "Explain the purpose of `/etc/fstab`.",
+    "category": "Linux",
+    "answer": "<p><code>/etc/fstab</code> defines which disks and partitions are mounted at boot.<br><br>Each line includes:<br><strong>device</strong>, <strong>mount point</strong>, <strong>filesystem</strong>, <strong>options</strong>, <strong>dump</strong>, <strong>fsck order</strong>.<br><br>Errors here can prevent booting or auto-mounting volumes.</p>"
+  },
+  {
+    "topic": "What does this command do: `chmod 640 /etc/shadow`",
+    "category": "Linux / Security",
+    "answer": "<p>It sets permissions on <code>/etc/shadow</code>, which stores hashed passwords.<br><strong>6</strong>: owner read/write.<br><strong>4</strong>: group read only.<br><strong>0</strong>: no permissions for others.<br>Protects credential hashes from being exposed.</p>"
+  },
+  {
+    "topic": "Explain how DNS zone transfer attacks work.",
+    "category": "Ethical Hacking",
+    "answer": "<p>Attackers attempt AXFR requests to copy an entire DNS zone file if misconfigured.<br>Command: <code>dig AXFR domain.com @ns1.domain.com</code>.<br><br>This reveals:<br><strong>- Subdomains</strong><br><strong>- Internal hosts</strong><br><strong>- Network structure</strong><br>Secure by restricting AXFR to trusted IPs.</p>"
+  },
+  {
+    "topic": "What does `ip link` show and why is it useful?",
+    "category": "Linux / Networking",
+    "answer": "<p><code>ip link</code> displays all network interfaces, MAC addresses, MTU, and operational states.<br><br>Useful for:<br><strong>- Checking interfaces up/down</strong><br><strong>- Seeing MAC changes (MITM detection)</strong><br><strong>- Debugging broken NICs</strong><br><strong>- Configuring VLANs or virtual interfaces</strong></p>"
+  },
+  {
+    "topic": "Explain the difference between TCP SYN flood and UDP flood attacks.",
+    "category": "Security / Networking",
+    "answer": "<p><strong>TCP SYN flood</strong>: sends many half-open TCP handshakes to exhaust server connection table.<br><strong>UDP flood</strong>: firehose of UDP packets to random ports causing ICMP unreachable responses.<br><br>SYN floods exploit stateful tracking. UDP floods exhaust bandwidth/CPU.</p>"
   }
 ]
